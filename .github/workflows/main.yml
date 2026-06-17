@@ -20,6 +20,14 @@ jobs:
         Expand-Archive -Path Sysinternals.zip -DestinationPath .
       shell: pwsh
 
+    - name: DEBUG - List all files
+      run: ls -R
+      shell: pwsh
+
+    - name: DEBUG - Test strings.exe execution
+      run: ./strings.exe
+      shell: pwsh
+
     - name: Run strings.exe on the launcher
       run: |
         ./strings.exe -a -n 8 NeteaseLauncher.exe > launcher_strings.txt
