@@ -12,14 +12,7 @@ jobs:
       uses: actions/checkout@v3
 
     - name: Download BloodStrike.exe
-      # This step is a placeholder. We need the actual download link from the user.
-      # If the user provides a link, we'll use curl or wget here.
-      # For example:
-      # run: curl -L "USER_PROVIDED_LINK" -o BloodStrike.exe
-      run: |
-        echo "Placeholder for download. Please provide a direct download link."
-        echo "Creating a dummy file for now."
-        fsutil file createnew BloodStrike.exe 140000000
+      run: curl -L "https://adl.netease.com/d/g/bloodstrike/c/pc" -o BloodStrike.exe
 
     - name: Install Sysinternals (contains strings.exe)
       run: |
