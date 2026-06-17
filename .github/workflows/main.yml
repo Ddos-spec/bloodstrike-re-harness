@@ -1,0 +1,43 @@
+name: Reverse Engineering Analysis
+
+on:
+  workflow_dispatch:
+
+jobs:
+  analyze:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Download BloodStrike.exe
+      # This step is a placeholder. We need the actual download link from the user.
+      # If the user provides a link, we'll use curl or wget here.
+      # For example:
+      # run: curl -L "USER_PROVIDED_LINK" -o BloodStrike.exe
+      run: |
+        echo "Placeholder for download. Please provide a direct download link."
+        echo "Creating a dummy file for now."
+        fsutil file createnew BloodStrike.exe 140000000
+
+    - name: Install Sysinternals (contains strings.exe)
+      run: |
+        # Using winget to install Sysinternals Suite
+        winget install --id=Microsoft.Sysinternals --source winget --accept-package-agreements --accept-source-agreements
+
+    - name: Run strings.exe
+      run: |
+        # The path to strings.exe might vary, need to add Sysinternals to PATH
+        # A more robust way would be to find it. For now, let's assume it's in a standard location or PATH
+        # This is a common path after winget installation
+        $sysinternalsPath = "C:\Program Files\Sysinternals"
+        $env:Path += ";$sysinternalsPath"
+        strings.exe -a -n 6 BloodStrike.exe > analysis_output.txt
+      shell: pwsh
+
+    - name: Upload analysis result
+      uses: actions/upload-artifact@v3
+      with:
+        name: analysis-result
+        path: analysis_output.txt
